@@ -8,7 +8,7 @@ Feature: BGovPH Philippines Navigation Bar
     So that I am familiar about the Philippines
 
     Acceptance Criteria
-    1. Validate the subdomain
+    1. Validate the sub-URL
         a. About the Philippines:   /philippines/about
         b. History:                 /philippines/history
         ...
@@ -23,5 +23,20 @@ Feature: BGovPH Philippines Navigation Bar
     Scenario: Navigate to About the Philippines
         Given the user is in BetterGovPH home page
         When the user hovers on the Philippines navigation bar
-        And the user clicks on the About the Philippines submenu
-        Then the header About the Philippines should be visible
+        And the user clicks on the "About the Philippines" submenu
+        Then the header "About the Philippines" should be visible
+        And the sub-URL should be "/philippines/about"
+    
+    Scenario: Navigate to History
+        Given the user is in BetterGovPH home page
+        When the user hovers on the Philippines navigation bar
+        And the user clicks on the "History" submenu
+        Then the header "History of the Philippines" should be visible
+        And the sub-URL should be "/philippines/history"
+
+    Scenario: Navigate to Culture
+        Given the user is in BetterGovPH home page
+        When the user hovers on the Philippines navigation bar
+        And the user clicks on the "Culture" submenu
+        Then the header "Filipino Culture" should be visible
+        And the sub-URL should be "/philippines/culture"
