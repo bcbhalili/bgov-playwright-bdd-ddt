@@ -21,3 +21,27 @@ Then('the header {string} should be visible', async ({ page }, header: string) =
 Then('the sub-URL should be {string}', async ({ page }, subURL: string) => {
     await expect(page.url().endsWith(subURL)).toBeTruthy()
 });
+
+Then('the user moves the mouse in the top-left corner of the screen', async ({ page }) => {
+    await page.mouse.move(0, 0)
+});
+
+Then('the submenu should not be visible', async ({ page }) => {
+    await expect(page.getByRole('menu')).toBeHidden()
+});
+
+Then('the {string} heading image should be visible', async ({ page }, headingImage: string) => {
+    await expect(page.locator(`//img[@alt="${headingImage}"]`)).toBeVisible()
+});
+
+Then('the BGovPH home button should be visible', async ({ page }) => {
+    await expect(page.getByTitle('Back to Home')).toBeVisible()
+});
+
+Then('the search region field should be visible', async ({ page }) => {
+    await expect(page.getByPlaceholder('Search regions...')).toBeVisible()
+});
+
+Then('{string} city should be visible', async ({ page }, city: string) => {
+    await expect(page.getByRole('button', { name: city })).toBeVisible()
+});
