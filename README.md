@@ -2,10 +2,13 @@
 
 This repository contain TypeScript files to be used in Test Automation of a Civic Technology platform called BetterGovPH.
 
+NPM Version: 12.2.0
+Playwright Version: 1.59.1
+
 SETUP AND FIRST RUN
 1. Install VSCode Extension: Cucumber (Gherkin) Full Support by Alexander Krechik
 2. Install Playwright and BDD Packages: 
-	npm install -D @playwright/test@1.62.0
+	npm install -D @playwright/test@1.59.0
 	npm install -D playwright-bdd
 	// -D means devDependencies (tools needed to run locally)
 3. Download browser binaries: 
