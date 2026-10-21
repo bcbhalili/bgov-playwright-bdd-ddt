@@ -203,3 +203,58 @@ Then('the {string} heading image should load', async ({ page }, headingImage) =>
     await expect(page.locator(`//img[@alt="${headingImage}"]`)).not.toHaveJSProperty('naturalWidth', 0);
 });
 ```
+
+## Page Object Models (POMs)
+Without POM:
+- hard to maintain
+- hardcoded values
+- unsimplified implementation of code (suffers readability)
+```
+await page.goto('/login');
+await page.locator('#email').fill('user@example.com');
+await page.locator('#password').fill('password123');
+await page.locator('button[type="submit"]').click();
+await expect(page.locator('.dashboard-welcome')).toBeVisible();
+```
+
+With POM:
+- locators housed in one place; dev made UI changes? easily adjusted in that place
+- readable code; represents behavior
+- scalability; new team members can understand faster
+
+Sample POM (Login.ts)
+- Promotes encapsulation; one of the pillars of Object-Oriented Programming
+```
+import { Page, Locator } from '@playwright/test';
+
+export class Login {
+    // Page member
+    private readonly page: Page
+
+    // Constructor
+    constructor(page: Page) {
+        this.page = page
+    }
+
+    // Declare locators as getters
+    get emailField(): Locator {
+        return this.page.getByLabel('Email')
+    }
+    get passwordField(): Locator {
+        return this.page.getByLabel('Password')
+    }
+    get signInButton(): Locator {
+        return this.page.getByLabel('Sign In')
+    }
+}
+```
+Sample import (from step definition file)
+```
+import { Login } from "../../pages/Login";
+```
+Sample object creation (from a step definition using page fixture)
+```
+const login = new Login(page)
+```
+
+Reference: https://www.anton.qa/blog/posts/page-object-model-in-playwright-with-typescript-complete-guide
