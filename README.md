@@ -5,6 +5,15 @@ This repository contain TypeScript files to be used in Test Automation of a Civi
 NPM Version: 12.2.0
 Playwright Version: 1.59.1
 
+.gitignore setup
+```
+node_modules/
+playwright-report/
+test-results/
+playwright.config.ts
+.features-gen/
+```
+
 SETUP AND FIRST RUN
 1. Install VSCode Extension: Cucumber (Gherkin) Full Support by Alexander Krechik
 2. Install Playwright and BDD Packages: 
