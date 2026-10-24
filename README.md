@@ -1,11 +1,11 @@
 # bgov-playwright-bdd-ddt
 
-This repository contain TypeScript files to be used in Test Automation of a Civic Technology platform called BetterGovPH.
+This repository contain TypeScript files to be used in Test Automation of a Civic Technology platform called BetterGovPH. This README file also serve as lecture notes throughout Live Coding Season 5.
 
 NPM Version: 12.2.0
 Playwright Version: 1.59.1
 
-.gitignore setup
+### .gitignore setup
 ```
 node_modules/
 playwright-report/
@@ -270,3 +270,102 @@ const login = new Login(page)
 ```
 
 Reference: https://www.anton.qa/blog/posts/page-object-model-in-playwright-with-typescript-complete-guide
+
+## POM Manager Implementation
+1. Create page objects
+```
+// Login.ts
+
+import { type Page, type Locator } from '@playwright/test';
+
+export class LoginPage {
+  readonly page: Page;
+  readonly usernameInput: Locator;
+  readonly passwordInput: Locator;
+  readonly loginButton: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.usernameInput = page.locator('#username');
+    this.passwordInput = page.locator('#password');
+    this.loginButton = page.locator('#login-submit');
+  }
+
+  async login(user: string, pass: string) {
+    await this.usernameInput.fill(user);
+    await this.passwordInput.fill(pass);
+    await this.loginButton.click();
+  }
+}
+```
+```
+// Dashboard.ts
+
+import { type Page, type Locator } from '@playwright/test';
+
+export class DashboardPage {
+  readonly page: Page;
+  readonly welcomeMessage: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.welcomeMessage = page.locator('.welcome-banner');
+  }
+}
+```
+2. Create a Page Object Manager
+```
+// POManager.ts
+
+import { type Page } from '@playwright/test';
+import { LoginPage } from './LoginPage';
+import { DashboardPage } from './DashboardPage';
+
+export class POManager {
+  readonly page: Page;
+  readonly loginPage: LoginPage;
+  readonly dashboardPage: DashboardPage;
+
+  constructor(page: Page) {
+    this.page = page;
+    // Instantiate all your page classes here
+    this.loginPage = new LoginPage(this.page);
+    this.dashboardPage = new DashboardPage(this.page);
+  }
+
+  getLoginPage() {
+    return this.loginPage;
+  }
+
+  getDashboardPage() {
+    return this.dashboardPage;
+  }
+}
+```
+3. Use POManager in Step Definitions
+4. [Optional] Use POManager in a custom fixture
+```
+// baseTest.ts
+import { test as base } from '@playwright/test';
+import { POManager } from '../pages/POManager';
+
+// Extend base test to include the POManager automatically
+export const test = base.extend<{ poManager: POManager }>({
+  poManager: async ({ page }, use) => {
+    const poManager = new POManager(page);
+    await use(poManager);
+  },
+});
+
+export { expect } from '@playwright/test';
+```
+```
+// tests/auth.spec.ts
+import { test, expect } from '../fixtures/baseTest'; // Import extended test
+
+test('User can log in cleaner', async ({ poManager, page }) => {
+  await page.goto('https://example.com');
+  await poManager.getLoginPage().login('user', 'pass');
+  await expect(poManager.getDashboardPage().welcomeMessage).toBeVisible();
+});
+```
