@@ -369,3 +369,18 @@ test('User can log in cleaner', async ({ poManager, page }) => {
   await expect(poManager.getDashboardPage().welcomeMessage).toBeVisible();
 });
 ```
+
+## Handling new tabs (2 methods)
+METHOD #1: Using context fixture
+```
+const [newPage] = await Promise.all([ context.waitForEvent('page') ])
+await newPage.waitForLoadState()
+```
+METHOD #2: Using page fixture
+```
+const newPage = await page.waitForEvent('popup')
+await newPage.waitForLoadState()
+```
+Note:
+- page fixture represents a single browser tab or popup
+- context fixture represents an isolated browser session (behaves as an incognito window by default)
