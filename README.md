@@ -384,3 +384,23 @@ await newPage.waitForLoadState()
 Note:
 - page fixture represents a single browser tab or popup
 - context fixture represents an isolated browser session (behaves as an incognito window by default)
+
+## Create, Modify, and Merge branch to main (console method)
+1. git pull (sync local and remote - up to date - get latest code) 
+2. git checkout -b custom-branch-name (create and move to that branch; -b stands for branch)
+3. Make desired changes
+4. git add . (add all files t stage)
+5. git commit -m "descriptive commit message"
+6. git push -u origin custom-branch-name (-u is used to create a remote custom branch and push updates; no need for -u for repeated push)
+7. Go to GitHub repository > Pull requests > new pull request
+8. base: target branch
+9. compare: custom branch
+10. Create pull request
+11. Fill title and description
+12. Set assignee/s
+13. Create pull request
+14. Code review process
+15. Merge pull request > Confirm merge
+16. (optional) delete branch
+17. Switch to main branch
+18. git pull
