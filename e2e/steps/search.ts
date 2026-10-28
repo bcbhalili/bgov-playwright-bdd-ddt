@@ -23,8 +23,13 @@ When('the user clicks on the result {string}', async ({ page }, result: string) 
     await manager.homePage.clickResult(result)
 });
 
-Then('the user should be redirected to the NBI Clearance Page', async ({ context }) => {
-    const [newPage] = await Promise.all([ context.waitForEvent('page') ])
+Then('the user should be redirected to {string}', async ({ page }, url: string) => {
+    const newPage = await page.waitForEvent('popup')
     await newPage.waitForLoadState()
-    await expect(newPage).toHaveURL("https://clearance.nbi.gov.ph/")
+    await expect(newPage).toHaveURL(url)
+    // Recaptcha stage
+    // await newPage.getByRole('button', { name: 'Begin begin' }).click()
+    // const newPage2 = await page.waitForEvent('popup')
+    // await newPage.waitForLoadState()
+    // await newPage2.getByRole('textbox', { name: 'email' }).isVisible()
 });
