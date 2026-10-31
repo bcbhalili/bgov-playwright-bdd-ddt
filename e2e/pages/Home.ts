@@ -13,6 +13,9 @@ export class Home {
     get philippinesNavBar(): Locator {
         return this.page.getByRole('link', { name: 'Philippines', exact: true })
     }
+    get floodControlProjectsNavBar(): Locator {
+        return this.page.getByRole('navigation').getByRole('link', { name: 'Flood Control Projects' })
+    }
     get subMenu(): Locator {
         return this.page.getByRole('menu')
     }
