@@ -20,9 +20,11 @@ Feature: BGovPH Philippines Navigation Bar
         ...
         z. Weather:                 About Weather Data
 
-    Scenario: Navigate to About the Philippines
+    Background:
         Given the user is in BetterGovPH home page
         When the user hovers on the Philippines navigation bar
+
+    Scenario: Navigate to About the Philippines
         And the user clicks on the "About the Philippines" submenu
         Then the header "About the Philippines" should be visible
         And the sub-URL should be "/philippines/about"
@@ -31,8 +33,6 @@ Feature: BGovPH Philippines Navigation Bar
         And the "Philippine landscape" heading image should be visible
     
     Scenario: Navigate to History
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "History" submenu
         Then the header "History of the Philippines" should be visible
         And the sub-URL should be "/philippines/history"
@@ -41,8 +41,6 @@ Feature: BGovPH Philippines Navigation Bar
         And the "Historical Philippines" heading image should be visible
 
     Scenario: Navigate to Culture
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "Culture" submenu
         Then the header "Filipino Culture" should be visible
         And the sub-URL should be "/philippines/culture"
@@ -51,8 +49,6 @@ Feature: BGovPH Philippines Navigation Bar
         And the "Filipino Culture" heading image should be visible
 
     Scenario: Navigate to Regions
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "Regions" submenu
         Then the header "Regions of the Philippines" should be visible
         And the sub-URL should be "/philippines/regions"
@@ -61,16 +57,12 @@ Feature: BGovPH Philippines Navigation Bar
         And the "Philippine Regions" heading image should be visible
 
     Scenario: Navigate to Map
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "Map" submenu
         Then the BGovPH home button should be visible
         And the search region field should be visible
         And the sub-URL should be "/philippines/map"
 
     Scenario: Navigate to Hotlines
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "Hotlines" submenu
         Then the header "Philippines Emergency Hotlines" should be visible
         And the sub-URL should be "/philippines/hotlines"
@@ -78,8 +70,6 @@ Feature: BGovPH Philippines Navigation Bar
         And the submenu should not be visible
 
     Scenario: Navigate to Holidays
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "Holidays" submenu
         Then the header "Philippine Public Holidays 2026" should be visible
         And the sub-URL should be "/philippines/holidays"
@@ -87,8 +77,6 @@ Feature: BGovPH Philippines Navigation Bar
         And the submenu should not be visible
 
     Scenario: Navigate to Forex
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "Forex" submenu
         Then the header "Currencies" should be visible
         And the sub-URL should be "/data/forex"
@@ -96,8 +84,6 @@ Feature: BGovPH Philippines Navigation Bar
         And the submenu should not be visible
 
     Scenario: Navigate to Weather
-        Given the user is in BetterGovPH home page
-        When the user hovers on the Philippines navigation bar
         And the user clicks on the "Weather" submenu
         Then the header "Cities" should be visible
         And "manila" city should be visible

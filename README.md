@@ -20,7 +20,7 @@ SETUP AND FIRST RUN
 	npm install -D @playwright/test
 	npm install -D playwright-bdd
 	// -D means devDependencies (tools needed to run locally)
-  // check playwright version: npx playwright --version
+    // check playwright version: npx playwright --version
 3. Download browser binaries: 
 	npx playwright install
 	// webkit, chromium, firefox

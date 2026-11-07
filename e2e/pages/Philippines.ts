@@ -1,12 +1,15 @@
 import { expect, Page, Locator } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class Philippines {
-    // Members
-    private readonly page: Page
-
+export class Philippines extends BasePage {
     // Constructor
     constructor(page: Page) {
-        this.page = page
+        super(page)
+    }
+
+    // Abstract method definition/s
+    get url(): string {
+        return 'https://bettergov.ph/philippines/about'
     }
 
     // Locators (getters)

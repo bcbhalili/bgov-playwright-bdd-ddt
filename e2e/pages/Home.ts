@@ -1,12 +1,15 @@
 import { expect, Page, Locator } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class Home {
-    // Member
-    private readonly page: Page
-
+export class Home extends BasePage {
     // Constructor
     constructor(page: Page) {
-        this.page = page
+        super(page)
+    }
+
+    // Abstract method definition/s
+    get url(): string {
+        return 'https://bettergov.ph'
     }
 
     // Getters (Locators)
