@@ -17,9 +17,10 @@ playwright.config.ts
 SETUP AND FIRST RUN
 1. Install VSCode Extension: Cucumber (Gherkin) Full Support by Alexander Krechik
 2. Install Playwright and BDD Packages: 
-	npm install -D @playwright/test@1.59.0
+	npm install -D @playwright/test
 	npm install -D playwright-bdd
 	// -D means devDependencies (tools needed to run locally)
+  // check playwright version: npx playwright --version
 3. Download browser binaries: 
 	npx playwright install
 	// webkit, chromium, firefox
@@ -404,3 +405,186 @@ Note:
 16. (optional) delete branch
 17. Switch to main branch
 18. git pull
+
+## Gherkin Keyword: Background
+The "Background" gherkin keyword indicates that the code under it will be executed for each Scenario.
+```
+    Background: Go to BGovPH Home Page then Hover to Philippines global menu
+        Given the user is in BetterGovPH home page
+        And the user hovers on the Philippines navigation bar
+
+    Scenario: Navigate to About the Philippines
+        When the user clicks on the "About the Philippines" submenu
+        Then the header "About the Philippines" should be visible
+        And the sub-URL should be "/philippines/about"
+        And the user moves the mouse in the top-left corner of the screen
+        And the submenu should not be visible
+        And the "Philippine landscape" heading image should be visible  
+```
+
+## Run tests by custom tag
+For test automation engineers who prefer to run tests in the command prompt, use:
+```npx playwright test --grep @customTag```
+
+Example:
+```
+@regression
+Feature: BGovPH Philippines Navigation Bar
+
+    ...
+
+    Background: Go to BGovPH Home Page then Hover to Philippines global menu
+        Given the user is in BetterGovPH home page
+        And the user hovers on the Philippines navigation bar
+
+    @PH-001
+    Scenario: Navigate to About the Philippines
+        When the user clicks on the "About the Philippines" submenu
+        Then the header "About the Philippines" should be visible
+        And the sub-URL should be "/philippines/about"
+        And the user moves the mouse in the top-left corner of the screen
+        And the submenu should not be visible
+        And the "Philippine landscape" heading image should be visible
+    
+    @PH-002
+    Scenario: Navigate to History
+        When the user clicks on the "History" submenu
+        Then the header "History of the Philippines" should be visible
+        And the sub-URL should be "/philippines/history"
+        And the user moves the mouse in the top-left corner of the screen
+        And the submenu should not be visible
+        And the "Historical Philippines" heading image should be visible
+```
+Sample commands and explanation
+```
+npx playwright test --grep @regression   // since it is indicated under feature level, this runs all tests 
+
+npx playwright test --grep @PH-002   // runs the scenario with tag @PH-002
+
+npx playwright test --grep-invert @PH-001   // runs all tests except for tests with tag @PH-001
+```
+
+# OOP in Test Automation
+- To create a scalable and robust framework, we'll use OOP as part of our code implementation.
+- Pillars used: Encapsulation, Abstraction, Inheritance
+
+## Sample implementations
+Base class
+```
+import { Page } from "@playwright/test";
+
+export abstract class BasePage {
+    // Member/s
+    protected readonly page: Page;
+
+    // Abstract prototype/s
+    abstract get url(): string;
+
+    // Base Constructor
+    constructor(page: Page) {
+        this.page = page
+    }
+
+    // Methods
+    async goto() {
+        await this.page.goto(this.url);
+    }
+}
+```
+Sample Child class
+```
+import { Page, Locator } from "@playwright/test";
+import { BasePage } from "./BasePage";
+
+export class HomePage extends BasePage {
+    // Constructor to use superclass
+    constructor(page: Page) {
+        super(page)
+    }
+
+    // Since the base class has an abstract method called goto(),
+    // each child class must implement their version of goto()
+    get url(): string {
+        return '/'
+    }
+
+    // Locators by way of getters
+    get philippinesNavigationBar(): Locator {
+        return this.page.getByRole('link', { name: 'Philippines', exact: true })
+    }
+    get servicesNavigationBar(): Locator {
+        return this.page.getByRole('link', { name: 'Services', exact: true })
+    }
+    get travelNavigationBar(): Locator {
+        return this.page.getByRole('navigation').getByRole('link', { name: 'Travel', exact: true })
+    }
+    get governmentNavigationBar(): Locator {
+        return this.page.getByRole('link', { name: 'Government', exact: true })
+    }
+}
+```
+Sample feature definitions
+```
+Feature: BetterGovPH Home Page Tests
+
+    Scenario: Validate visibility of global navigation bars
+        Given the user opens a browser to navigate to BetterGovPH home page
+        Then the Philippines global navigation is visible
+        And the Services global navigation is visible
+        And the Travel global navigation is visible
+        And the Government global navigation is visible
+```
+Use in step definition
+```
+import { test, expect } from "@playwright/test";
+import { createBdd } from "playwright-bdd";
+import { POManager } from "../pages/managers/POManager";
+
+const { Given, When, Then } = createBdd();
+
+Given('the user opens a browser to navigate to BetterGovPH home page', async ({ page }) => {
+    const manager = new POManager(page)
+    await manager.homePage.goto()
+});
+
+Then('the Philippines global navigation is visible', async ({ page }) => {
+    const manager = new POManager(page)
+    await expect(manager.homePage.philippinesNavigationBar).toBeVisible()
+});
+
+Then('the Services global navigation is visible', async ({ page }) => {
+    const manager = new POManager(page)
+    await expect(manager.homePage.servicesNavigationBar).toBeVisible()
+});
+
+Then('the Travel global navigation is visible', async ({ page }) => {
+    const manager = new POManager(page)
+    await expect(manager.homePage.travelNavigationBar).toBeVisible()
+});
+
+Then('the Government global navigation is visible', async ({ page }) => {
+    const manager = new POManager(page)
+    await expect(manager.homePage.governmentNavigationBar).toBeVisible()
+});
+```
+
+# Jenkins
+One of the most popular CI/CD tool; open-sourced
+## Installation and Configuration
+1. https://www.jenkins.io/download/
+2. Download generic java package (.war)
+3. Install > Run service as a localsystem > port 8080 (default)
+4. Browser > localhost:8080
+5. Unlock jenkins > password (refer to directory) > install suggested plugins
+6. Credentials
+NOTE:
+- start jenkins: net start jenkins
+- stop jenkins: net stop jenkins
+## Create New Job
+1. Dashboard > create new jobs
+2. Enter item name (or job name)
+3. Freestyle project (commonly used) > ok
+4. 
+
+# References
+- https://www.anton.qa/blog/posts/page-object-model-in-playwright-with-typescript-complete-guide#creating-a-base-page-class
