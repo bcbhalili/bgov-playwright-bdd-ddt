@@ -568,23 +568,97 @@ Then('the Government global navigation is visible', async ({ page }) => {
 });
 ```
 
-# Jenkins
-One of the most popular CI/CD tool; open-sourced
-## Installation and Configuration
-1. https://www.jenkins.io/download/
-2. Download generic java package (.war)
-3. Install > Run service as a localsystem > port 8080 (default)
-4. Browser > localhost:8080
-5. Unlock jenkins > password (refer to directory) > install suggested plugins
-6. Credentials
-NOTE:
-- start jenkins: net start jenkins
-- stop jenkins: net stop jenkins
-## Create New Job
-1. Dashboard > create new jobs
-2. Enter item name (or job name)
-3. Freestyle project (commonly used) > ok
-4. 
+# Playwright Codegen
+- Deterministic, rule-based recording tool; macro-reader; not AI
+- Launch by using "npx playwright codegen [optional-url]"
+
+# GitHub Actions CI/CD
+## What you'll need?
+- Git 
+    - Use git -v to verify installation
+    - Not yet installed? [Download here](https://git-scm.com/install/)
+- GitHub Account
+    - No account yet? [Start here](https://github.com)
+## Setup
+1. Create .github/workflows
+2. Under workflows > Create a user-named .yml file (ex: playwright.yml)
+```
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]  # any codes pushed in main or master branch, GitHub action
+                                # will be triggered; code and test will be executed
+  pull_request:
+    branches: [ main, master ]  # any pull requests to main or master branch, GitHub action
+                                # will be triggered; code and test will be executed
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test    # NPM script that can be customized based on needs on testing;
+                                  # typical commands being used in the command line
+    - uses: actions/upload-artifact@v5
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+```
+3. Commit/deploy changes to repository
+4. Navigate to GitHub > Actions > see commit from step 3 > wait for process to complete
+5. Modify playwright.config.ts > defineConfig.reporter > change value to [['html'], ['github']]
+    - nice to have modification to get more details results in GitHub actions
+## Trigger Job Manually
+Create another yml file and copy the code below:
+```
+name: Manual Trigger Playwright Tests 
+on:
+  workflow_dispatch:
+    inputs:
+      browser:
+        type: choice
+        description: Which browser to test
+        required: true
+        options:
+          - firefox
+          - chromium
+          - webkit
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v6
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
+    - name: Run Playwright tests
+      run: npx playwright test --project ${{ github.event.inputs.browser }}
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+```
 
 # References
+- https://www.youtube.com/watch?v=WzgQ57rf1Mw
+- https://playwright.dev/docs/ci-intro#setting-up-github-actions
+- https://playwright.dev/docs/codegen
+- https://codemify.com/playwright-github-actions-workflow
 - https://www.anton.qa/blog/posts/page-object-model-in-playwright-with-typescript-complete-guide#creating-a-base-page-class
