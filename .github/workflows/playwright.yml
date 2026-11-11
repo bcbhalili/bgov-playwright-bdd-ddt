@@ -21,7 +21,7 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test    # NPM script that can be customized based on needs on testing;
                                   # typical commands being used in the command line
-    - uses: actions/upload-artifact@v5
+    - uses: actions/upload-artifact@v6
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
