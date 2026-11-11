@@ -1,10 +1,13 @@
 {
   "devDependencies": {
-    "@playwright/test": "^1.65.0",
+    "@playwright/test": "1.59",
     "playwright-bdd": "^9.2.1"
   },
   "scripts": {
     "bdd": "npx bddgen && npx playwright test",
     "bdd-ui": "npx bddgen && npx playwright test --ui"
+  },
+  "dependencies": {
+    "playwright": "1.59"
   }
 }
