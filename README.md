@@ -656,6 +656,18 @@ jobs:
         retention-days: 30
 ```
 
+# Enable screen record of tests
+```
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  use: {
+    video: 'retain-on-failure', // Saves .webm files in test-results/
+                                // Can also use 'on' for all tests
+  },
+});
+```
+
 # References
 - https://www.youtube.com/watch?v=WzgQ57rf1Mw
 - https://playwright.dev/docs/ci-intro#setting-up-github-actions
