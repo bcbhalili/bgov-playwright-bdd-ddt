@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@v4
       with:
         node-version: lts/*
     - name: Install dependencies
@@ -21,7 +21,7 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test    # NPM script that can be customized based on needs on testing;
                                   # typical commands being used in the command line
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
