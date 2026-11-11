@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@playwright/test": "1.59",
+    "@playwright/test": "^1.65.0",
     "playwright-bdd": "^9.2.1"
   },
   "scripts": {
@@ -8,6 +8,6 @@
     "bdd-ui": "npx bddgen && npx playwright test --ui"
   },
   "dependencies": {
-    "playwright": "1.59"
+    "playwright": "^1.65.0"
   }
 }
