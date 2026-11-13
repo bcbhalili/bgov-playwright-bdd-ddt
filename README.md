@@ -7,11 +7,8 @@ Playwright Version: 1.59.1
 
 ### .gitignore setup
 ```
-node_modules/
 playwright-report/
 test-results/
-playwright.config.ts
-.features-gen/
 ```
 
 SETUP AND FIRST RUN
@@ -134,6 +131,9 @@ const { Given, When, Then } = createBdd();
 }
 ```
 10. First Run
+- Run bddgen and run all tests: npx bddgen && npx playwright test
+- Run bddgen and open playwright UI: npx bddgen && npx playwright test --ui
+- Run bddgen and run test by tag: npx bddgen && npx playwright test --grep @<tag>
 [e2e/steps/navigation/philippines.ts]
 ```
 import { expect } from "@playwright/test";
@@ -668,9 +668,60 @@ export default defineConfig({
 });
 ```
 
+# Enable retries
+Retries are to give failed tests "multiple chances" to re-test until it passes or was not able to exhaust specified number of retries
+- Suitable for slow systems
+```
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  retries: 3,
+});
+```
+Playwright Test will categorize tests as follows:
+1. "passed" - tests that passed on the first run;
+2. "flaky" - tests that failed on the first run, but passed when retried;
+3. "failed" - tests that failed on the first run and failed all retries.
+
+# Flaky Tests
+Unreliable software tests that randomly passes/fails.
+## Characteristics
+1. Sensitive to Execution Environment: different setups; passed in test engineer 1, but failed in test engineer 2
+2. Inconsistent Across Platforms: platform/hardware capabilities
+3. External Services: third party platforms APIs, DBs, hostings, etc.
+4. Timing Sensitivity: timezones, test data with expiry dates
+5. Network Issues: internet downtimes; speed constraints
+6. Race Condition: overlapping operations may have domino effect; shared variable (SV) is initially 100 and Scenario validates shared variable to be 110, P1 adds 10 and P2 subtracts 10 and they run concurrently, P2 completes first (SV = 90) then P1 completes (SV = 100)
+7. Non-reproducible failures: usually points to test data with unique characteristics, timing, or environment (tested in UAT, but works in DEV)
+8. Unpredictable Error Reporting: indirect error reports that's difficult to identify source of problems
+## Why detect Flaky Tests?
+1. Maintaining Test Reliability: cracks the test process which misdirects test reults
+2. Prevent False Alarms: filed bugs where it will get rejected; consumes time for devs and QAs
+3. Ensuring Quality Assurance: pinpoint and eliminate problems making the software stable and functional; promotes confidence
+4. Enhancing Test Coverage: an accurate assessment of flaky tests promotes complete test coverage since flaky tests are among the types that may neglect the detection of critical features and edge cases, hence effectively causing possible defects and bugs, that may remain undetected.
+5. Meeting Compliance and Regulatory Requirements: time-consuming tests across industries subject to compliance and regulatory compliance have to be flagged out and rectified for strict testing and quality assurance requirements to be followed.
+
+# Data-Driven Testing (DDT)
+Scenario Outlines are used to write tests that can be executed multiple times with different data sets. This approach reduces code duplication and makes your tests more efficient.
+```
+Scenario Outline: Validate sub-navigation under Philippines global navigation
+  Given the user opens a browser to navigate to BetterGovPH home page
+  When the user hovers on Philippines global navigation
+  And the user click on the "<subNavigation>" sub-navigation
+  Then the sub-URL should be "<subUrl>"
+  Examples:
+  | subNavigation         | subUrl                |
+  | About the Philippines | /philippines/about    |
+  | History               | /philippines/history  |
+  | Culture               | /philippines/culture  |
+```
+
 # References
 - https://www.youtube.com/watch?v=WzgQ57rf1Mw
+- https://testdino.com/blog/playwright-bdd
 - https://playwright.dev/docs/ci-intro#setting-up-github-actions
 - https://playwright.dev/docs/codegen
+- https://playwright.dev/docs/test-retries
 - https://codemify.com/playwright-github-actions-workflow
 - https://www.anton.qa/blog/posts/page-object-model-in-playwright-with-typescript-complete-guide#creating-a-base-page-class
+- https://www.geeksforgeeks.org/software-testing/what-is-a-flaky-test/#characteristics-of-flaky-tests
