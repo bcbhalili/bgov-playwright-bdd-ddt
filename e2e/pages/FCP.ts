@@ -19,6 +19,9 @@ export class FCP extends BasePage {
     get searchProjectsField(): Locator {
         return this.page.getByPlaceholder('Projects, contractors, municipality, province, region...')
     }
+    get filtersAppliedHeader(): Locator {
+        return this.page.getByRole('heading', { name: "Flood Control Projects (" })
+    }
 
     // Method/s
     async verifyFCPHeader(headerText: string) {

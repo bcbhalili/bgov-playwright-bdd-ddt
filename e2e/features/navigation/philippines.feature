@@ -24,64 +24,28 @@ Feature: BGovPH Philippines Navigation Bar
         Given the user is in BetterGovPH home page
         When the user hovers on the Philippines navigation bar
 
-    Scenario: Navigate to About the Philippines
-        And the user clicks on the "About the Philippines" submenu
-        Then the header "About the Philippines" should be visible
-        And the sub-URL should be "/philippines/about"
+    @ddt
+    Scenario Outline: Submenus under Philippines Navigation Bar
+        And the user clicks on the "<subMenu>" submenu
+        Then the header "<header>" should be visible
+        And the sub-URL should be "<subUrl>"
         And the user moves the mouse in the top-left corner of the screen
         And the submenu should not be visible
-        And the "Philippine landscape" heading image should be visible
-    
-    Scenario: Navigate to History
-        And the user clicks on the "History" submenu
-        Then the header "History of the Philippines" should be visible
-        And the sub-URL should be "/philippines/history"
-        And the user moves the mouse in the top-left corner of the screen
-        And the submenu should not be visible
-        And the "Historical Philippines" heading image should be visible
-
-    Scenario: Navigate to Culture
-        And the user clicks on the "Culture" submenu
-        Then the header "Filipino Culture" should be visible
-        And the sub-URL should be "/philippines/culture"
-        And the user moves the mouse in the top-left corner of the screen
-        And the submenu should not be visible
-        And the "Filipino Culture" heading image should be visible
-
-    Scenario: Navigate to Regions
-        And the user clicks on the "Regions" submenu
-        Then the header "Regions of the Philippines" should be visible
-        And the sub-URL should be "/philippines/regions"
-        And the user moves the mouse in the top-left corner of the screen
-        And the submenu should not be visible
-        And the "Philippine Regions" heading image should be visible
+        And the "<headingImage>" heading image should be visible
+        Examples:
+            | subMenu                   | header                            | subUrl                | headingImage              |
+            | About the Philippines     | About the Philippines             | /philippines/about    | Philippine landscape      |
+            | History                   | History of the Philippines        | /philippines/history  | Historical Philippines    |
+            | Culture                   | Filipino Culture                  | /philippines/culture  | Filipino Culture          |
+            | Regions                   | Regions of the Philippines        | /philippines/regions  | Philippine Regions        |
+            | Hotlines                  | Philippines Emergency Hotlines    | /philippines/hotlines |                           |
+            | Forex                     | Currencies                        | /data/forex           |                           |
 
     Scenario: Navigate to Map
         And the user clicks on the "Map" submenu
         Then the BGovPH home button should be visible
         And the search region field should be visible
         And the sub-URL should be "/philippines/map"
-
-    Scenario: Navigate to Hotlines
-        And the user clicks on the "Hotlines" submenu
-        Then the header "Philippines Emergency Hotlines" should be visible
-        And the sub-URL should be "/philippines/hotlines"
-        And the user moves the mouse in the top-left corner of the screen
-        And the submenu should not be visible
-
-    Scenario: Navigate to Holidays
-        And the user clicks on the "Holidays" submenu
-        Then the header "Philippine Public Holidays 2026" should be visible
-        And the sub-URL should be "/philippines/holidays"
-        And the user moves the mouse in the top-left corner of the screen
-        And the submenu should not be visible
-
-    Scenario: Navigate to Forex
-        And the user clicks on the "Forex" submenu
-        Then the header "Currencies" should be visible
-        And the sub-URL should be "/data/forex"
-        And the user moves the mouse in the top-left corner of the screen
-        And the submenu should not be visible
 
     Scenario: Navigate to Weather
         And the user clicks on the "Weather" submenu

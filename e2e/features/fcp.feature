@@ -40,14 +40,25 @@ Feature: Flood Control Projects
         And the "District Engineering Office" label containing "Select DEO" in field should be visible
         And the "Legislative District" label containing "Select Legislative District" in field should be visible
 
-    Scenario: Search for "Construction of Aborlan River Waterway, Puerto Princesa South Road, Aborlan, Palawan"
+    @ddt
+    Scenario Outline: Search for "Construction of Aborlan River Waterway, Puerto Princesa South Road, Aborlan, Palawan"
         Given the user is in BetterGovPH home page
         When the user hovers on the Flood Control Projects global navigation bar
         And the user clicks on the "Charts" submenu
-        And the user provided "Construction of Aborlan River Waterway, Puerto Princesa South Road, Aborlan, Palawan" in the Search Project field
-        And the user provided "2023" as the Infrastructure Year
-        And the user provided "Region IV-B" as the Region
-        And the user provided "Palawan" as the Province
-        And the user provided "Construction of Waterway" as the Type of Work
-        And the user provided "Palawan 3rd District Engineering Office" as the District Engineering Office
-        And the user provided "PALAWAN (THIRD LEGISLATIVE DISTRICT)" as the Legislative District
+        And the user provided "<project>" in the Search Project field
+        And the user provided "<infrastructureYear>" as the Infrastructure Year
+        And the user provided "<region>" as the Region
+        And the user provided "<province>" as the Province
+        And the user provided "<typeOfWork>" as the Type of Work
+        And the user provided "<deo>" as the District Engineering Office
+        And the user provided "<legislativeDistrict>" as the Legislative District
+        And filters applied should contain "<project>"
+        And filters applied should contain "<infrastructureYear>"
+        And filters applied should contain "<region>"
+        And filters applied should contain "<province>"
+        And filters applied should contain "<typeOfWork>"
+        And filters applied should contain "<deo>"
+        And filters applied should contain "<legislativeDistrict>"
+        Examples:
+            | project                                                                               | infrastructureYear | region       | province | typeOfWork                 | deo                                       | legislativeDistrict                   |
+            | Construction of Aborlan River Waterway, Puerto Princesa South Road, Aborlan, Palawan  | 2023               | Region IV-B  | Palawan  | Construction of Waterway   | Palawan 3rd District Engineering Office   | PALAWAN (THIRD LEGISLATIVE DISTRICT)  |

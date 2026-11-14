@@ -24,8 +24,10 @@ Then('the submenu should not be visible', async ({ page }) => {
 });
 
 Then('the {string} heading image should be visible', async ({ page }, headingImage: string) => {
-    const manager = new POManager(page)
-    await manager.philippinesPage.validateHeadingImage(headingImage)
+    if (headingImage != '') {
+        const manager = new POManager(page)
+        await manager.philippinesPage.validateHeadingImage(headingImage)
+    }
 });
 
 Then('the BGovPH home button should be visible', async ({ page }) => {

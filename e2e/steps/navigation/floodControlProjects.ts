@@ -53,3 +53,8 @@ When('the user provided {string} as the Legislative District', async ({ page }, 
     const manager = new POManager(page)
     await manager.fcpPage.pickLegislativeDistrict(legislativeDistrict)
 });
+
+When('filters applied should contain {string}', async ({ page }, filter: string) => {
+    const manager = new POManager(page)
+    await expect(manager.fcpPage.filtersAppliedHeader).toContainText(filter)
+});

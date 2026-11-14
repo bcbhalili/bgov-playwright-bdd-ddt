@@ -5,11 +5,15 @@
   },
   "scripts": {
     "bdd": "npx bddgen && npx playwright test",
+    "bdd-headed": "npx bddgen && npx playwright test --headed",
     "bdd-ui": "npx bddgen && npx playwright test --ui",
     "bdd-fcp": "npx bddgen && npx playwright test fcp",
     "bdd-fcp-firefox": "npx bddgen && npx playwright test fcp --project=firefox",
     "bdd-fcp-chrome": "npx bddgen && npx playwright test fcp --project=chromium",
-    "bdd-fcp-webkit": "npx bddgen && npx playwright test fcp --project=webkit"
+    "bdd-fcp-webkit": "npx bddgen && npx playwright test fcp --project=webkit",
+    "bdd-ddt-chrome": "npx bddgen && npx playwright test --grep @ddt --project=chromium",
+    "bdd-ddt-webkit": "npx bddgen && npx playwright test --grep @ddt --project=webkit",
+    "bdd-ddt-firefox": "npx bddgen && npx playwright test --grep @ddt --project=firefox"
   },
   "dependencies": {
     "playwright": "^1.65.0"
