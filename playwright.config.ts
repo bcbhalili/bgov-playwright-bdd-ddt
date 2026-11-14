@@ -14,9 +14,11 @@ export default defineConfig({
     testDir,
     reporter: 'html',
     fullyParallel: true,
+    retries: 3,
     use: {
         screenshot: 'only-on-failure',
-        trace: 'on-first-retry'
+        trace: 'on-first-retry',
+        video: 'on'
     },
     projects: [
         {

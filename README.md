@@ -656,6 +656,24 @@ jobs:
         retention-days: 30
 ```
 
+# Flaky Tests
+Unreliable software tests that randomly passes/fails.
+## Characteristics
+1. Sensitive to Execution Environment: different setups; passed in test engineer 1, but failed in test engineer 2
+2. Inconsistent Across Platforms: platform/hardware capabilities
+3. External Services: third party platforms APIs, DBs, hostings, etc.
+4. Timing Sensitivity: timezones, test data with expiry dates
+5. Network Issues: internet downtimes; speed constraints
+6. Race Condition: overlapping operations may have domino effect; shared variable (SV) is initially 100 and Scenario validates shared variable to be 110, P1 adds 10 and P2 subtracts 10 and they run concurrently, P2 completes first (SV = 90) then P1 completes (SV = 100)
+7. Non-reproducible failures: usually points to test data with unique characteristics, timing, or environment (tested in UAT, but works in DEV)
+8. Unpredictable Error Reporting: indirect error reports that's difficult to identify source of problems
+## Why detect Flaky Tests?
+1. Maintaining Test Reliability: cracks the test process which misdirects test reults
+2. Prevent False Alarms: filed bugs where it will get rejected; consumes time for devs and QAs
+3. Ensuring Quality Assurance: pinpoint and eliminate problems making the software stable and functional; promotes confidence
+4. Enhancing Test Coverage: an accurate assessment of flaky tests promotes complete test coverage since flaky tests are among the types that may neglect the detection of critical features and edge cases, hence effectively causing possible defects and bugs, that may remain undetected.
+5. Meeting Compliance and Regulatory Requirements: time-consuming tests across industries subject to compliance and regulatory compliance have to be flagged out and rectified for strict testing and quality assurance requirements to be followed.
+
 # Enable screen record of tests
 ```
 import { defineConfig } from '@playwright/test';
@@ -682,24 +700,6 @@ Playwright Test will categorize tests as follows:
 1. "passed" - tests that passed on the first run;
 2. "flaky" - tests that failed on the first run, but passed when retried;
 3. "failed" - tests that failed on the first run and failed all retries.
-
-# Flaky Tests
-Unreliable software tests that randomly passes/fails.
-## Characteristics
-1. Sensitive to Execution Environment: different setups; passed in test engineer 1, but failed in test engineer 2
-2. Inconsistent Across Platforms: platform/hardware capabilities
-3. External Services: third party platforms APIs, DBs, hostings, etc.
-4. Timing Sensitivity: timezones, test data with expiry dates
-5. Network Issues: internet downtimes; speed constraints
-6. Race Condition: overlapping operations may have domino effect; shared variable (SV) is initially 100 and Scenario validates shared variable to be 110, P1 adds 10 and P2 subtracts 10 and they run concurrently, P2 completes first (SV = 90) then P1 completes (SV = 100)
-7. Non-reproducible failures: usually points to test data with unique characteristics, timing, or environment (tested in UAT, but works in DEV)
-8. Unpredictable Error Reporting: indirect error reports that's difficult to identify source of problems
-## Why detect Flaky Tests?
-1. Maintaining Test Reliability: cracks the test process which misdirects test reults
-2. Prevent False Alarms: filed bugs where it will get rejected; consumes time for devs and QAs
-3. Ensuring Quality Assurance: pinpoint and eliminate problems making the software stable and functional; promotes confidence
-4. Enhancing Test Coverage: an accurate assessment of flaky tests promotes complete test coverage since flaky tests are among the types that may neglect the detection of critical features and edge cases, hence effectively causing possible defects and bugs, that may remain undetected.
-5. Meeting Compliance and Regulatory Requirements: time-consuming tests across industries subject to compliance and regulatory compliance have to be flagged out and rectified for strict testing and quality assurance requirements to be followed.
 
 # Data-Driven Testing (DDT)
 Scenario Outlines are used to write tests that can be executed multiple times with different data sets. This approach reduces code duplication and makes your tests more efficient.
