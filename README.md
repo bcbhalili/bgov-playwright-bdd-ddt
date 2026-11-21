@@ -762,7 +762,7 @@ const testDir = defineBddConfig({
 - import test from ManagerFixture.ts
 - createBdd must take an argument "test"
 - { page } in applicable step definitions are now { managerFixture }
-- { page } in applicable step definitions must remove object creation codes
+- { managerFixture } in step definitions must remove object creation codes
 ```
 // home.ts
 import { createBdd } from "playwright-bdd";
