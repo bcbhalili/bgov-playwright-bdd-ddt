@@ -25,7 +25,7 @@ Feature: BGovPH Philippines Navigation Bar
         When the user hovers on the Philippines navigation bar
 
     @ddt
-    Scenario Outline: Submenus under Philippines Navigation Bar
+    Scenario Outline: Submenu under Philippines Navigation Bar
         And the user clicks on the "<subMenu>" submenu
         Then the header "<header>" should be visible
         And the sub-URL should be "<subUrl>"
@@ -33,13 +33,13 @@ Feature: BGovPH Philippines Navigation Bar
         And the submenu should not be visible
         And the "<headingImage>" heading image should be visible
         Examples:
-            | subMenu                   | header                            | subUrl                | headingImage              |
-            | About the Philippines     | About the Philippines             | /philippines/about    | Philippine landscape      |
-            | History                   | History of the Philippines        | /philippines/history  | Historical Philippines    |
-            | Culture                   | Filipino Culture                  | /philippines/culture  | Filipino Culture          |
-            | Regions                   | Regions of the Philippines        | /philippines/regions  | Philippine Regions        |
-            | Hotlines                  | Philippines Emergency Hotlines    | /philippines/hotlines |                           |
-            | Forex                     | Currencies                        | /data/forex           |                           |
+            | subMenu                   | header                            | subUrl                | headingImage                                                              |
+            | About the Philippines     | About the Philippines             | /philippines/about    |                                                                           |
+            | History                   | History of the Philippines        | /philippines/history  | Green rice terraces following the mountain slopes near Banaue, Ifugao     |                                               
+            | Culture                   | Many Islands. A living culture.   | /philippines/culture  | Sinulog dancers in red and gold holding Santo Niño images in Cebu in 2014 |
+            | Regions                   | 18 regions, 82 provinces          | /philippines/regions  |                                                                           |
+            | Hotlines                  | When you need help now            | /philippines/hotlines |                                                                           |
+            | Forex                     | Major currencies                  | /data/forex           |                                                                           |
 
     Scenario: Navigate to Map
         And the user clicks on the "Map" submenu
@@ -49,7 +49,7 @@ Feature: BGovPH Philippines Navigation Bar
 
     Scenario: Navigate to Weather
         And the user clicks on the "Weather" submenu
-        Then the header "Cities" should be visible
+        Then the header "Major cities" should be visible
         And "manila" city should be visible
         And "cebu" city should be visible
         And "davao" city should be visible

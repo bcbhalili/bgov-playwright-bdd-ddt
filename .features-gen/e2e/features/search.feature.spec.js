@@ -1,32 +1,32 @@
 // Generated from: e2e\features\search.feature
-import { test } from "playwright-bdd";
+import { test } from "../../../e2e/ManagerFixture.ts";
 
 test.describe('Search for Services and Directory Items', () => {
 
-  test('Search to Apply for NBI Multipurpose Clearance', async ({ Given, When, Then, And, page }) => { 
+  test('Search to Apply for NBI Multipurpose Clearance', async ({ Given, When, Then, And, managerFixture, page }) => { 
     await Given('the user is in BetterGovPH home page', null, { page }); 
-    await And('the search field should be visible', null, { page }); 
-    await When('the user provides a search term "Apply for NBI Multipurpose Clearance"', null, { page }); 
-    await Then('the result "Apply for NBI Multipurpose Clearance" should be visible', null, { page }); 
-    await When('the user clicks on the result "Apply for NBI Multipurpose Clearance"', null, { page }); 
+    await And('the search field should be visible', null, { managerFixture }); 
+    await When('the user provides a search term "Apply for NBI Multipurpose Clearance"', null, { managerFixture }); 
+    await Then('the result "Apply for NBI Multipurpose Clearance" should be visible', null, { managerFixture }); 
+    await When('the user clicks on the result "Apply for NBI Multipurpose Clearance"', null, { managerFixture }); 
     await Then('the user should be redirected to "https://clearance.nbi.gov.ph/"', null, { page }); 
   });
 
-  test('Search to Register for a Taxpayer Identification Number (TIN)', async ({ Given, When, Then, And, page }) => { 
+  test('Search to Register for a Taxpayer Identification Number (TIN)', async ({ Given, When, Then, And, managerFixture, page }) => { 
     await Given('the user is in BetterGovPH home page', null, { page }); 
-    await And('the search field should be visible', null, { page }); 
-    await When('the user provides a search term "Register for a Taxpayer Identification Number (TIN)"', null, { page }); 
-    await Then('the result "Register for a Taxpayer Identification Number (TIN)" should be visible', null, { page }); 
-    await When('the user clicks on the result "Register for a Taxpayer Identification Number (TIN)"', null, { page }); 
+    await And('the search field should be visible', null, { managerFixture }); 
+    await When('the user provides a search term "Register for a Taxpayer Identification Number (TIN)"', null, { managerFixture }); 
+    await Then('the result "Register for a Taxpayer Identification Number (TIN)" should be visible', null, { managerFixture }); 
+    await When('the user clicks on the result "Register for a Taxpayer Identification Number (TIN)"', null, { managerFixture }); 
     await Then('the user should be redirected to "https://orus.bir.gov.ph/"', null, { page }); 
   });
 
-  test('Search to Check Patient\'s PhilHealth Eligibility Status upon Admission', async ({ Given, When, Then, And, page }) => { 
+  test('Search to Check Patient\'s PhilHealth Eligibility Status upon Admission', async ({ Given, When, Then, And, managerFixture, page }) => { 
     await Given('the user is in BetterGovPH home page', null, { page }); 
-    await And('the search field should be visible', null, { page }); 
-    await When('the user provides a search term "Check Patient\'s PhilHealth Eligibility Status upon Admission"', null, { page }); 
-    await Then('the result "Check Patient\'s PhilHealth Eligibility Status upon Admission" should be visible', null, { page }); 
-    await When('the user clicks on the result "Check Patient\'s PhilHealth Eligibility Status upon Admission"', null, { page }); 
+    await And('the search field should be visible', null, { managerFixture }); 
+    await When('the user provides a search term "Check Patient\'s PhilHealth Eligibility Status upon Admission"', null, { managerFixture }); 
+    await Then('the result "Check Patient\'s PhilHealth Eligibility Status upon Admission" should be visible', null, { managerFixture }); 
+    await When('the user clicks on the result "Check Patient\'s PhilHealth Eligibility Status upon Admission"', null, { managerFixture }); 
     await Then('the user should be redirected to "https://cec.philhealth.gov.ph"', null, { page }); 
   });
 

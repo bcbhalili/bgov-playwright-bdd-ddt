@@ -1,22 +1,19 @@
-import { POManager } from "../pages/POManager";
+import { test } from "../ManagerFixture"
 import { createBdd } from "playwright-bdd";
-const { Given, When, Then } = createBdd()
+const { Given, When, Then } = createBdd(test)
 
 Given('the user is in BetterGovPH home page', async ({ page }) => {
     await page.goto('https://bettergov.ph')
 });
 
-When('the user hovers on the Philippines navigation bar', async ({ page }) => {
-    const manager = new POManager(page)
-    await manager.homePage.philippinesNavBar.hover()
+When('the user hovers on the Philippines navigation bar', async ({ managerFixture }) => {
+    await managerFixture.homePage.philippinesNavBar.hover()
 });
 
-When('the user hovers on the Flood Control Projects global navigation bar', async ({ page }) => {
-    const manager = new POManager(page)
-    await manager.homePage.floodControlProjectsNavBar.hover()
+When('the user hovers on the Services navigation bar', async ({ managerFixture }) => {
+    await managerFixture.homePage.servicesNavBar.hover()
 });
 
-When('the user clicks on the {string} submenu', async ({ page }, submenu: string) => {
-    const manager = new POManager(page)
-    await manager.homePage.clickPhilippinesSubmenu(submenu)
+When('the user clicks on the {string} submenu', async ({ managerFixture }, submenu: string) => {
+    await managerFixture.homePage.clickSubmenuItem(submenu)
 });

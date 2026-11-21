@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 export abstract class BasePage {
     // Member/s

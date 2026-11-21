@@ -1,7 +1,7 @@
 import { FCP } from "./FCP";
 import { Home } from "./Home";
 import { Philippines } from "./Philippines";
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
 
 export class POManager {
     private readonly page: Page
@@ -25,5 +25,16 @@ export class POManager {
     }
     get fcpPage(): FCP {
         return this.fcp
+    }
+
+    // Common methods
+    async validateSubURL(subURL: string) {
+        await expect(this.page.url().endsWith(subURL)).toBeTruthy()
+    } 
+    async validateHeaderVisibility(header: string) {
+        await expect(this.page.getByRole('heading', { name: header, exact: true })).toBeVisible()
+    }
+    async validateFieldVisibilityByPlaceholder(placeholder: string) {
+        await expect(this.page.getByPlaceholder(placeholder)).toBeVisible()
     }
 }

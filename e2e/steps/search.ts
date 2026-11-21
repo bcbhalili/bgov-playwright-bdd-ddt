@@ -1,26 +1,22 @@
 import { expect } from "@playwright/test";
 import { createBdd } from "playwright-bdd";
-import { POManager } from "../pages/POManager";
-const { Given, When, Then } = createBdd();
+import { test } from "../ManagerFixture";
+const { Given, When, Then } = createBdd(test);
 
-Given('the search field should be visible', async ({ page }) => {
-    const manager = new POManager(page)
-    await expect(manager.homePage.searchField).toBeVisible()
+Given('the search field should be visible', async ({ managerFixture }) => {
+    await expect(managerFixture.homePage.searchField).toBeVisible()
 });
 
-When('the user provides a search term {string}', async ({ page }, searchTerm: string) => {
-    const manager = new POManager(page)
-    await manager.homePage.searchField.fill(searchTerm)
+When('the user provides a search term {string}', async ({ managerFixture }, searchTerm: string) => {
+    await managerFixture.homePage.searchField.fill(searchTerm)
 });
 
-Then('the result {string} should be visible', async ({ page }, result: string) => {
-    const manager = new POManager(page)
-    await manager.homePage.validateVisibilityOfResult(result)
+Then('the result {string} should be visible', async ({ managerFixture }, result: string) => {
+    await managerFixture.homePage.validateVisibilityOfResult(result)
 });
 
-When('the user clicks on the result {string}', async ({ page }, result: string) => {
-    const manager = new POManager(page)
-    await manager.homePage.clickResult(result)
+When('the user clicks on the result {string}', async ({ managerFixture }, result: string) => {
+    await managerFixture.homePage.clickResult(result)
 });
 
 Then('the user should be redirected to {string}', async ({ page }, url: string) => {

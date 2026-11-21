@@ -6,8 +6,8 @@ import { defineBddConfig } from 'playwright-bdd'            // To instruct playw
 
 // Define the path of feature files (features) and step definitions (steps)
 const testDir = defineBddConfig({
-    features: 'e2e/features/**/*.feature',  // ** added to implement sub-folders under features
-    steps: 'e2e/steps/**/*.ts',             // ** added to implement sub-folders under step-definitions
+    features: 'e2e/features/**/*.feature',                  // ** added to implement sub-folders under features
+    steps: ['e2e/steps/**/*.ts', 'e2e/ManagerFixture.ts'],  // ** added to implement sub-folders under step-definitions
 });
 
 export default defineConfig({

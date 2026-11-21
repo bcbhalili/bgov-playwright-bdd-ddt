@@ -787,6 +787,9 @@ When('the user clicks on the {string} submenu', async ({ managerFixture }, subme
 ```
 5. Update code changes using "npx bddgen"
 
+# Notes for importing json or csv for data driven testing
+---------------------------------------------------------
+
 # References
 - https://www.youtube.com/watch?v=WzgQ57rf1Mw
 - https://testdino.com/blog/playwright-bdd

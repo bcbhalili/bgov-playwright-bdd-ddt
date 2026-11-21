@@ -14,11 +14,14 @@ export class Home extends BasePage {
 
     // Getters (Locators)
     get philippinesNavBar(): Locator {
-        return this.page.getByRole('link', { name: 'Philippines', exact: true })
+        return this.page.getByRole('button', { name: 'Philippines', exact: true })
     }
-    get floodControlProjectsNavBar(): Locator {
-        return this.page.getByRole('navigation').getByRole('link', { name: 'Flood Control Projects' })
+    get servicesNavBar(): Locator {
+        return this.page.getByRole('button', { name: 'Services', exact: true })
     }
+    // get floodControlProjectsNavBar(): Locator {
+    //     return this.page.getByRole('navigation').getByRole('link', { name: 'Flood Control Projects' })
+    // }
     get subMenu(): Locator {
         return this.page.getByRole('menu')
     }
@@ -27,7 +30,7 @@ export class Home extends BasePage {
     }
 
     // Methods
-    async clickPhilippinesSubmenu(submenu: string) {
+    async clickSubmenuItem(submenu: string) {
         await this.page.getByRole("menuitem", { name: submenu }).click()
     }
     async validateVisibilityOfResult(result: string) {

@@ -21,16 +21,10 @@ export class Philippines extends BasePage {
     }
 
     // Methods
-    async validateHeaderVisibility(header: string) {
-        await expect(this.page.getByRole('heading', { name: header })).toBeVisible()
-    }
-    async validateSubURL(subURL: string) {
-        await expect(this.page.url().endsWith(subURL)).toBeTruthy()
-    }
     async validateHeadingImage(headingImage: string) {
         await expect(this.page.locator(`//img[@alt="${headingImage}"]`)).toBeVisible()
     }
     async validateCity(city: string) {
-        await expect(this.page.getByRole('button', { name: city })).toBeVisible()
+        await expect(this.page.getByText(city).first()).toBeVisible()
     }
 }
