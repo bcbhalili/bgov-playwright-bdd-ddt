@@ -3,7 +3,7 @@
 This repository contain TypeScript files to be used in Test Automation of a Civic Technology platform called BetterGovPH. This README file also serve as lecture notes throughout Live Coding Season 5.
 
 NPM Version: 12.2.0
-Playwright Version: 1.59.1
+Playwright Version: 1.65.0
 
 ### .gitignore setup
 ```
@@ -716,12 +716,86 @@ Scenario Outline: Validate sub-navigation under Philippines global navigation
   | Culture               | /philippines/culture  |
 ```
 
+# Schedule Workflow
+Configure a workflow where GitHub actions triggers a pipeline run based on Cron expression
+```
+name: Scheduled Playwright Tests
+
+on:
+  # Runs at 00:00 UTC every day
+  schedule:
+    - cron: '0 0 * * *'   # Modify frequency using Cron expression
+```
+
+# Custom Fixtures
+Custom fixtures fixes and answers the problem questions:
+- "Can I declare a custom fixture that can be used across all tests?"
+- "Is there a possibility I can remove object creation codes for each applicable step definitions?"
+
+## Steps to create
+1. Create a .ts file for the custom fixtures under e2e/fixtures
+2. Code for fixture file with respect to Page Object Manager:
+```
+// ManagerFixture.ts
+import { test as base } from 'playwright-bdd';
+import { POManager } from './pages/POManager';
+
+type ManagerFixture = {
+    managerFixture: POManager
+}
+
+export const test = base.extend<ManagerFixture>({
+    managerFixture: async({ page }, use) => {
+        await use(new POManager(page))
+    }
+})
+```
+3. playwright.config.ts > Declare "steps" as a list and add the location of ManagerFixture.ts
+```
+const testDir = defineBddConfig({
+    features: 'e2e/features/**/*.feature',                  // ** added to implement sub-folders under features
+    steps: ['e2e/steps/**/*.ts', 'e2e/ManagerFixture.ts'],  // ** added to implement sub-folders under step-definitions
+    // importTestFrom: 'e2e/ManagerFixture.ts'    
+});
+```
+4. Use "managerFixture" in step definitions
+- import test from ManagerFixture.ts
+- createBdd must take an argument "test"
+- { page } in applicable step definitions are now { managerFixture }
+- { page } in applicable step definitions must remove object creation codes
+```
+// home.ts
+import { createBdd } from "playwright-bdd";
+import { test } from "../ManagerFixture";
+const { Given, When, Then } = createBdd(test)
+
+Given('the user is in BetterGovPH home page', async ({ page }) => {
+    await page.goto('https://bettergov.ph')
+});
+
+When('the user hovers on the Philippines navigation bar', async ({ managerFixture }) => {
+    await managerFixture.homePage.philippinesNavBar.hover()
+});
+
+When('the user hovers on the Flood Control Projects global navigation bar', async ({ managerFixture }) => {
+    await managerFixture.homePage.floodControlProjectsNavBar.hover()
+});
+
+When('the user clicks on the {string} submenu', async ({ managerFixture }, submenu: string) => {
+    await managerFixture.homePage.clickPhilippinesSubmenu(submenu)
+});
+```
+5. Update code changes using "npx bddgen"
+
 # References
 - https://www.youtube.com/watch?v=WzgQ57rf1Mw
 - https://testdino.com/blog/playwright-bdd
 - https://playwright.dev/docs/ci-intro#setting-up-github-actions
 - https://playwright.dev/docs/codegen
 - https://playwright.dev/docs/test-retries
+- https://playwright.dev/docs/test-fixtures
 - https://codemify.com/playwright-github-actions-workflow
 - https://www.anton.qa/blog/posts/page-object-model-in-playwright-with-typescript-complete-guide#creating-a-base-page-class
 - https://www.geeksforgeeks.org/software-testing/what-is-a-flaky-test/#characteristics-of-flaky-tests
+- https://www.geeksforgeeks.org/operating-systems/writing-cron-expressions-for-scheduling-tasks/
+- https://www.youtube.com/watch?v=TAUSCB6sMXc
