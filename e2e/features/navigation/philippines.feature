@@ -36,7 +36,7 @@ Feature: BGovPH Philippines Navigation Bar
             | subMenu                   | header                            | subUrl                | headingImage                                                              |
             | About the Philippines     | About the Philippines             | /philippines/about    |                                                                           |
             | History                   | History of the Philippines        | /philippines/history  | Green rice terraces following the mountain slopes near Banaue, Ifugao     |                                               
-            | Culture                   | Many Islands. A living culture.   | /philippines/culture  | Sinulog dancers in red and gold holding Santo Niño images in Cebu in 2014 |
+            | Culture                   | Many islands. A living culture.   | /philippines/culture  | Sinulog dancers in red and gold holding Santo Niño images in Cebu in 2014 |
             | Regions                   | 18 regions, 82 provinces          | /philippines/regions  |                                                                           |
             | Hotlines                  | When you need help now            | /philippines/hotlines |                                                                           |
             | Forex                     | Major currencies                  | /data/forex           |                                                                           |
