@@ -11,11 +11,11 @@ playwright-report/
 test-results/
 ```
 
-SETUP AND FIRST RUN
+# Setup
 1. Install VSCode Extension: Cucumber (Gherkin) Full Support by Alexander Krechik
 2. Install Playwright and BDD Packages: 
-	npm install -D @playwright/test
-	npm install -D playwright-bdd
+	npm install @playwright/test
+	npm install playwright-bdd
 	// -D means devDependencies (tools needed to run locally)
     // check playwright version: npx playwright --version
 3. Download browser binaries: 
@@ -787,8 +787,68 @@ When('the user clicks on the {string} submenu', async ({ managerFixture }, subme
 ```
 5. Update code changes using "npx bddgen"
 
-# Notes for importing json or csv for data driven testing
----------------------------------------------------------
+# Data-Driven testing (Alternate Method - using YAML)
+This alternative is applicable for medium volume of test dataset. However, there are other external test data to use:
+- JSON: for nested payloads
+- CSV: for bulk test combinations
+- YAML: for readable configurations
+## Setup
+1. Install yaml parser: npm install yaml
+2. Create a yaml test data file under data folder (see sample):
+```
+philippines:
+  name: Philippines
+  #------------------#
+  about: 
+    name: About the Philippines
+    description: The Republic of the Philippines at a glance.
+    subUrl: /philippines/about
+  history:
+    name: History
+    description: From pre-colonial peoples to the modern republic.
+    subUrl: /philippines/history
+  culture: 
+    name: Culture
+    description: Languages, festivals, food, faith, and craft.
+    subUrl: /philippines/culture
+
+services:
+  business-trade:
+    name: Business and Trade
+  certificates-ids:
+    name: Certificates and IDs
+  contributions:
+    name: Contributions
+  disaster-weather:
+    name: Disaster and Weather
+```
+3. Pass reference keys in feature files; use Scenario Outline
+4. Load and parse the yml file in applicable step definition files
+```
+// -- Other imports here --
+import fs from 'fs';
+import path from 'path';
+import YAML from 'yaml';
+const filePath = path.resolve(__dirname, '<location>');     // __dirname gets the current location of the file
+const fileContents = fs.readFileSync(filePath, 'utf8');     // UTF-8 ensures that your TypeScript filestreams can get readable strings.
+                                                            // Without specifying UTF-8 means that the stream reads values in terms of raw binary buffer objects
+const testData = YAML.parse(fileContents);                  // Convert YAML text to JSON
+
+// Step definitions
+When('I log in as {string}', async ({ page }, userType: string) => {
+  const user = testData[userType];
+  if (!user) throw new Error(`User type "${userType}" not found in users.yml`);
+
+  await page.getByLabel('Email').fill(user.username);
+  await page.getByLabel('Password').fill(user.password);
+  await page.getByRole('button', { name: 'Sign in' }).click();
+});
+
+Then('I should see the {string} dashboard', async ({ page }, userType: string) => {
+  const user = testData[userType];
+  await expect(page.getByText(user.expectedRole)).toBeVisible();
+});
+```
 
 # References
 - https://www.youtube.com/watch?v=WzgQ57rf1Mw
@@ -797,6 +857,7 @@ When('the user clicks on the {string} submenu', async ({ managerFixture }, subme
 - https://playwright.dev/docs/codegen
 - https://playwright.dev/docs/test-retries
 - https://playwright.dev/docs/test-fixtures
+- https://medium.com/@gunashekarr11/data-driven-api-testing-using-playwright-json-csv-yaml-5f97f7e0a662
 - https://codemify.com/playwright-github-actions-workflow
 - https://www.anton.qa/blog/posts/page-object-model-in-playwright-with-typescript-complete-guide#creating-a-base-page-class
 - https://www.geeksforgeeks.org/software-testing/what-is-a-flaky-test/#characteristics-of-flaky-tests
