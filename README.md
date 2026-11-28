@@ -724,7 +724,7 @@ name: Scheduled Playwright Tests
 on:
   # Runs at 00:00 UTC every day
   schedule:
-    - cron: '0 0 * * *'   # Modify frequency using Cron expression
+    - cron: '0 * * * *'   # Modify frequency using Cron expression
 ```
 
 # Custom Fixtures
