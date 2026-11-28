@@ -1,19 +1,16 @@
+import { Page, expect } from "@playwright/test";
 import { Home } from "./Home";
 import { Philippines } from "./Philippines";
-import { Page, expect } from "@playwright/test";
-import { Services } from "./Services";
 
 export class POManager {
     private readonly page: Page
     private readonly home: Home
     private readonly philippines: Philippines
-    private readonly services: Services
 
     constructor(page: Page) {
         this.page = page
         this.home = new Home(this.page)
         this.philippines = new Philippines(this.page)
-        this.services = new Services(this.page)
     }
 
     // Getter for the objects of POMs
@@ -22,9 +19,6 @@ export class POManager {
     }
     get philippinesPage(): Philippines {
         return this.philippines
-    }
-    get servicesPage(): Services {
-        return this.services
     }
 
     // Common methods

@@ -3,6 +3,7 @@ import { createBdd } from "playwright-bdd";
 import fs from 'fs'; 
 import path from 'path';
 import YAML from 'yaml';
+
 const { When, Then } = createBdd(test)
 const servicesFilePath = path.resolve(__dirname, '../../data/services.yml')
 const servicesFileContents = fs.readFileSync(servicesFilePath, 'utf-8')
@@ -34,7 +35,7 @@ Then('the search field with placeholder {string} is visible under {string}', asy
     await managerFixture.validateFieldVisibilityByPlaceholder(placeholder)
 });
 
-Then('the user provided search term {string} in search field with placeholder {string} under {string}', async ({ managerFixture }, searchTerm: string, placeholderKey: string, globalNavigation: string) => {
+Then('the user provided search term {string} in search field with placeholder {string} under {string}', async ({ managerFixture, page }, searchTerm: string, placeholderKey: string, globalNavigation: string) => {
     const placeholder = servicesTestData[globalNavigation][placeholderKey] 
 
     await managerFixture.fillSearchFieldByPlaceholder(placeholder, searchTerm)
