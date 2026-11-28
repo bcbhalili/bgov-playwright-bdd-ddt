@@ -1,0 +1,14 @@
+services:
+  search-field-placeholder: What do you need? e.g. passport, NBI clearance
+  business-and-trade:
+    name: Business and Trade
+    subUrl: /services?category=business-trade
+  certificates-and-ids:
+    name: Certificates and IDs
+    subUrl: /services?category=certificates-ids
+  contributions:
+    name: Contributions
+    subUrl: /services?category=contributions
+  disaster-and-weather:
+    name: Disaster and Weather
+    subUrl: /services?category=disaster-weather

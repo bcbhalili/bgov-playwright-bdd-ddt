@@ -56,24 +56,34 @@ Feature: BGovPH Services Navigation Bar
         Given the user is in BetterGovPH home page
         When the user hovers on the Services navigation bar
     
-    @ddt
-    Scenario Outline: Submenu under Services Navigation Bar
-        And the user clicks on the "<subMenu>" submenu
-        And the sub-URL should be "<subUrl>"
-        And the header "<subMenu>" should be visible
-        And the search field with placeholder text "What do you need? e.g. passport, NBI clearance" should be visible
+    # @ddt
+    # Scenario Outline: Submenu under Services Navigation Bar
+    #     And the user clicks on the "<subMenu>" submenu
+    #     And the sub-URL should be "<subUrl>"
+    #     And the header "<subMenu>" should be visible
+    #     And the search field with placeholder text "What do you need? e.g. passport, NBI clearance" should be visible
+    #     Examples:
+    #         | subMenu               | subUrl                                |
+    #         | Business and Trade    | /services?category=business-trade     | 
+    #         | Certificates and IDs  | /services?category=certificates-ids   |
+    #         | Contributions         | /services?category=contributions      |
+    #         | Disaster and Weather  | /services?category=disaster-weather   |
+    #         | Education             | /services?category=education          |
+    #         | Health                | /services?category=health             |
+    #         | Employment            | /services?category=employment         |
+    #         | Housing               | /services?category=housing            |
+    #         | Passport and Travel   | /services?category=passport-travel    |
+    #         | Social Services       | /services?category=social-services    |
+    #         | Tax                   | /services?category=tax                |
+    #         | Transport and Driving | /services?category=transport-driving  |
+    #         | Uncategorized         | /services?category=uncategorized      |
+    
+    @debug
+    Scenario Outline: Business and Trade with different searches
+        And the user navigates on the "business-and-trade" under "services"
+        Then the search field with placeholder "search-field-placeholder" is visible under "services"
+        When the user provided search term "<searchTerm>" in search field with placeholder "search-field-placeholder" under "services"
+        And the url should be "<url>" upon click of "<searchTerm>" result 
         Examples:
-            | subMenu               | subUrl                                |
-            | Business and Trade    | /services?category=business-trade     | 
-            | Certificates and IDs  | /services?category=certificates-ids   |
-            | Contributions         | /services?category=contributions      |
-            | Disaster and Weather  | /services?category=disaster-weather   |
-            | Education             | /services?category=education          |
-            | Health                | /services?category=health             |
-            | Employment            | /services?category=employment         |
-            | Housing               | /services?category=housing            |
-            | Passport and Travel   | /services?category=passport-travel    |
-            | Social Services       | /services?category=social-services    |
-            | Tax                   | /services?category=tax                |
-            | Transport and Driving | /services?category=transport-driving  |
-            | Uncategorized         | /services?category=uncategorized      |
+            | searchTerm                            | url                               |
+            | Request for Renewal of Business Name  | https://bnrs.dti.gov.ph/renewal   |

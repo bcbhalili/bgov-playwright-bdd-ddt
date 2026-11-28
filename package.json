@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.11",
     "playwright-bdd": "^9.2.1"
   },
   "scripts": {
@@ -15,9 +16,11 @@
     "bdd-fcp-webkit": "npx bddgen && npx playwright test fcp --project=webkit",
     "bdd-ddt-chrome": "npx bddgen && npx playwright test --grep @ddt --project=chromium",
     "bdd-ddt-webkit": "npx bddgen && npx playwright test --grep @ddt --project=webkit",
-    "bdd-ddt-firefox": "npx bddgen && npx playwright test --grep @ddt --project=firefox"
+    "bdd-ddt-firefox": "npx bddgen && npx playwright test --grep @ddt --project=firefox",
+    "bdd-ddt-debug": "npx bddgen && npx playwright test --grep @debug"
   },
   "dependencies": {
-    "playwright": "^1.65.0"
+    "playwright": "^1.65.0",
+    "yaml": "^2.9.1"
   }
 }
